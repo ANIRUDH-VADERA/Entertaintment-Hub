@@ -174,7 +174,7 @@ body {
 
 .ContentModal__description {
   display: flex;
-  height: 40%;
+  height: 35%;
   overflow-y: scroll;
   padding: 15px;
   border-radius: 20px;
@@ -206,6 +206,7 @@ body {
     height: 100%;
   }
   .ContentModal__title {
+    height: 15%;
     font-size: 3.5vw;
   }
   .ContentModal__description {

@@ -6,15 +6,12 @@ import CustomPagination from "./CustomPagination.js";
 const Trending = () => {
     
     const [TrendingData, setData] = useState([]);
-    const [isPending, setPending] = useState(true);
-    const [isError, setError] = useState(false);
-    const [api_key,setAPI] = useState(process.env.REACT_APP_API_KEY);
+    const api_key = process.env.REACT_APP_API_KEY;
     const [currentPage,setCurrentPage] = useState(1);
     const [total_pages,setTotalPages] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
-        setError(false);
         try {
             const results = await axios("https://api.themoviedb.org/3/trending/all/week", {
                 params: {
@@ -22,14 +19,10 @@ const Trending = () => {
                     page : currentPage
                 }
             });
-        console.log(results.data.results);
         setData(results.data.results);
         setTotalPages(results.data.total_pages);
-        setPending(false);
     }
         catch (err) {
-        setPending(false);
-        setError(true);
         console.log(err);
         }
     }

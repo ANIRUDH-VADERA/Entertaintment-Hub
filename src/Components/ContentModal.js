@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {img_500,unavailable,unavailableLandscape} from "./Config.js"
@@ -31,54 +30,46 @@ export default function ContentModal({children,id,media_type}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [TrendingData, setData] = useState([]);
-  const [isPending, setPending] = useState(true);
-  const [isError, setError] = useState(false);
-  const [api_key,setAPI] = useState(process.env.REACT_APP_API_KEY);
+  const api_key = process.env.REACT_APP_API_KEY;
   const [video,setVideo] = useState();
 
 
   useEffect(() => {
+    let isMounted = true;
     const fetchData = async () => {
-    setError(false);
     try {
         const results = await axios("https://api.themoviedb.org/3/"+media_type+"/"+id+"?language=en-US", {
             params: {
                 api_key: api_key,
             }
         });
-    console.log(results.data);
-    setData(results.data);
-    setPending(false);
+      if (isMounted) setData(results.data);
     }
     catch (err) {
-    setPending(false);
-    setError(true);
     console.log(err);
     }
   }
       fetchData();
+      return () => { isMounted = false };
   }, [api_key,media_type,id])
 
   useEffect(() => {
+    let isMounted = true;
     const fetchData = async () => {
-    setError(false);
     try {
         const results = await axios("https://api.themoviedb.org/3/"+media_type+"/"+id+"/videos?language=en-US", {
             params: {
                 api_key: api_key,
             }
         });
-    console.log(results.data.results[0]?.key);
-    setVideo(results.data.results[0]?.key);
-    setPending(false);
+      if (isMounted) setVideo(results.data.results[0]?.key);
     }
     catch (err) {
-    setPending(false);
-    setError(true);
     console.log(err);
     }
   }
     fetchData();
+    return () => { isMounted = false };
   }, [api_key,media_type,id])
   
   return (

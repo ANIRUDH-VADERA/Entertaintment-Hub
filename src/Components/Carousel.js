@@ -10,9 +10,7 @@ const handleDragStart = (e) => e.preventDefault();
 
 const Carousel = ({media_type,id}) => {
     const [TrendingData, setData] = useState([]);
-    const [isPending, setPending] = useState(true);
-    const [isError, setError] = useState(false);
-    const [api_key,setAPI] = useState(process.env.REACT_APP_API_KEY);
+    const api_key = process.env.REACT_APP_API_KEY;
     const items = TrendingData?.map((item)=>(
         <div className='carouselItem'>
             <img 
@@ -27,7 +25,6 @@ const Carousel = ({media_type,id}) => {
       
     useEffect(() => {
         const fetchData = async () => {
-        setError(false);
         try {
             const results = await axios("https://api.themoviedb.org/3/"+media_type+"/"+id+"/credits?language=en-US", {
                 params: {
@@ -35,11 +32,8 @@ const Carousel = ({media_type,id}) => {
                 }
             });
         setData(results.data.cast);
-        setPending(false);
         }
         catch (err) {
-        setPending(false);
-        setError(true);
         console.log(err);
         }
       }

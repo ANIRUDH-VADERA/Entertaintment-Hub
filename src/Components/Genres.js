@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import Chip from '@mui/material/Chip';
 import { ThemeProvider } from '@emotion/react';
@@ -11,14 +11,10 @@ const darkTheme = createTheme({
   });
 
 const Genres = (props) => {
-    
-    const [isPending, setPending] = useState(true);
-    const [isError, setError] = useState(false);
-    const [api_key,setAPI] = useState(process.env.REACT_APP_API_KEY);
+    const api_key = process.env.REACT_APP_API_KEY;
 
     useEffect(() => {
         const fetchData = async () => {
-        setError(false);
         try {
             const results = await axios("https://api.themoviedb.org/3/genre/"+props.type+"/list?language=en-US", {
                 params: {
@@ -26,11 +22,8 @@ const Genres = (props) => {
                 }
             });
         props.setGenres(results.data.genres);
-        setPending(false);
         }
         catch (err) {
-        setPending(false);
-        setError(true);
         console.log(err);
         }
     }
@@ -39,10 +32,8 @@ const Genres = (props) => {
         return ()=>{
             props.setGenres({});    
         }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [api_key])
-    
-    console.log(props.genres);
 
     const handleAdd = (genre)=>{
         props.setSelectedGenres([...props.selectedGenres , genre]);
@@ -64,13 +55,13 @@ const Genres = (props) => {
         <div style={{padding : "6px 0"}}>
         {props.selectedGenres &&  (props.selectedGenres).map((item)=>{
             return(
-                <ThemeProvider theme={darkTheme}>
+                <ThemeProvider theme={darkTheme} key={item.id}>
                     <Chip 
+                        key={item.id}
                         label = {item.name}
                         style = {{margin : 2}}
                         clickable
                         size = "small"
-                        key={item.id}
                         color = "primary"
                         onDelete={()=>{handleRemove(item)}}
                     />
@@ -79,13 +70,13 @@ const Genres = (props) => {
         })}
         {props.genres &&  (props.genres).map((item)=>{
                     return(
-                        <ThemeProvider theme={darkTheme}>
+                        <ThemeProvider theme={darkTheme} key={item.id}>
                             <Chip 
+                                key={item.id}
                                 label = {item.name}
                                 style = {{margin : 2}}
                                 clickable
                                 size = "small"
-                                key={item.id}
                                 onClick={()=>{handleAdd(item)}}
                             />
                         </ThemeProvider>

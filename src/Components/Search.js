@@ -1,6 +1,5 @@
 import { TextField } from "@material-ui/core";
 import { useState,useEffect } from "react";
-import useGenre from "./useGenre.js";
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createTheme } from '@material-ui/core/styles';
 import { Button } from "@mui/material";
@@ -14,14 +13,9 @@ import CustomPagination from "./CustomPagination.js";
 const Search = () => {
     
     const [TrendingData, setData] = useState([]);
-    const [isPending, setPending] = useState(true);
-    const [isError, setError] = useState(false);
-    const [api_key,setAPI] = useState(process.env.REACT_APP_API_KEY);
+    const api_key = process.env.REACT_APP_API_KEY;
     const [currentPage,setCurrentPage] = useState(1);
     const [total_pages,setTotalPages] = useState(0);
-    const [selectedGenres,setSelectedGenres] = useState([]);
-    const [genres,setGenres] = useState([]);
-    const genreforURL = useGenre(selectedGenres);
     const [type,setType] = useState(0);
     const [searchResult,setSearchResult] = useState("");
 
@@ -40,29 +34,28 @@ const Search = () => {
       });
 
       const fetchData = async () => {
-        setError(false);
         try {
-            const results = await axios("https://api.themoviedb.org/3/search/"+(type ? "tv" : "movie")+"?language=en-US&include_adult=false", {
-                params: {
-                    api_key: api_key,
-                    page : currentPage,
-                    query : searchResult,
-                }
-            });
-        console.log(results.data.results);
-        setData(results.data.results);
-        setTotalPages(results.data.total_pages);
-        setPending(false);
+            var results = ""
+            if(searchResult !== "")
+            {
+                results = await axios("https://api.themoviedb.org/3/search/"+(type ? "tv" : "movie")+"?language=en-US&include_adult=false", {
+                    params: {
+                        api_key: api_key,
+                        page : currentPage,
+                        query : searchResult,
+                    }
+                });
+                setData(results.data.results);
+                setTotalPages(results.data.total_pages);
+            }    
         }
         catch (err) {
-        setPending(false);
-        setError(true);
         console.log(err);
         }
     }
-
-      useEffect(() => {
-        fetchData();
+    useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage,api_key,total_pages,type])
 
     return ( 
