@@ -8,6 +8,18 @@ import SearchIcon from '@mui/icons-material/Search';
 import TvIcon from '@mui/icons-material/Tv';
 import { useEffect,useState } from 'react';
 import {useNavigate} from "react-router-dom";
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles({
+  root : {
+    width : "100%",
+    position : "fixed",
+    bottom : 0,
+    backgroundColor : "#2d313a !important",
+    zIndex : 100,
+  },
+})
+
 
 export default function SimpleBottomNavigation() {
   const [value, setValue] = useState(0);
@@ -31,21 +43,17 @@ export default function SimpleBottomNavigation() {
         navigate("/Search");
     }
   },[value,navigate])
+  const classes = useStyles();
 
   return (
-    <Box sx={{ 
-        backgroundColor : "#2d313a !important",
-        width: "100%",
-        position : "fixed",
-        bottom : 0,
-        zIndex : 100,
-         }}>
+    <Box>
       <BottomNavigation
         showLabels
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
+        className={classes.root}
       >
         <BottomNavigationAction 
         style={{ 

@@ -73,7 +73,7 @@ export default function ContentModal({children,id,media_type}) {
   }, [api_key,media_type,id])
   
   return (
-    <div>
+    <>
       <div className = "media" style={{cursor : "pointer"}} onClick={handleOpen}>{children}</div>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -123,6 +123,6 @@ export default function ContentModal({children,id,media_type}) {
           </Box>
         </Fade>
       </Modal>
-    </div>
+    </>
   );
 }

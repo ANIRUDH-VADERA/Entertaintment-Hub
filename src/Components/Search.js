@@ -9,6 +9,7 @@ import Tab from '@mui/material/Tab';
 import axios from "axios";
 import SingleContent from "./SingleContent.js"
 import CustomPagination from "./CustomPagination.js";
+import { makeStyles } from '@material-ui/styles';
 
 const Search = () => {
     
@@ -22,6 +23,24 @@ const Search = () => {
     const handleChange = (event)=>{
         setSearchResult(event.target.value);
     }
+
+    const useStyles = makeStyles({
+        tabs: {
+      
+          "& .MuiTabs-indicator": {
+            backgroundColor: "white",
+          },
+          "& .MuiTab-root.Mui-selected": {
+            color: 'white'
+          },
+          "& .MuiTab-root": {
+            color: 'white'
+          },
+          "& .MuiTabs-flexContainer ": {
+            justifyContent : "center"
+          }
+        }
+      })
 
     const
      darkTheme = createTheme({
@@ -58,6 +77,8 @@ const Search = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage,api_key,total_pages,type])
 
+    const classes = useStyles();
+
     return ( 
         <div>
             <ThemeProvider theme={darkTheme} >
@@ -69,16 +90,15 @@ const Search = () => {
                     className="searchBox"
                     onChange={handleChange}
                     />
-                    <Button color="primary" onClick={fetchData} variant = "contained" style={{marginLeft:10}}> <SearchIcon fontSize="large" /> </Button>
+                    <Button color="secondary" onClick={fetchData} variant = "contained" style={{marginLeft:10}}> <SearchIcon fontSize="large" /> </Button>
                 </div>
                 <Tabs 
                 value={type} 
-                indicatorColor = "primary" 
-                textColor = "primary"
                 onChange = {(event,newValue)=>{
                     setType(newValue);
                     setCurrentPage(1);
                 }}
+                className={classes.tabs}
                 style={{paddingBottom : 5}}
                 aria-label="disabled tabs example"
                 >

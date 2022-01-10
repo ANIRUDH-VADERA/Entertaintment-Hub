@@ -45,10 +45,6 @@ body {
   }
 }
 
-.css-16lloyr-MuiBottomNavigation-root {
-  background-color: #2d313a !important;
-}
-
 .media {
   display: flex;
   flex-direction: column;
@@ -117,10 +113,6 @@ body {
 .search {
   display: flex;
   margin: 15px 0;
-}
-
-.css-heg063-MuiTabs-flexContainer {
-  justify-content: center !important;
 }
 
 .ContentModal__landscape {
@@ -224,16 +216,4 @@ body {
   border-radius: 10px;
   margin-bottom: 5px;
   box-shadow: 0px 0px 5px black;
-}
-
-.css-1aquho2-MuiTabs-indicator {
-  background-color: white !important;
-}
-
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
-  color: white !important;
-}
-
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
-  color: white !important;
 }
