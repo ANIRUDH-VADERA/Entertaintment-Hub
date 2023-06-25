@@ -1,4 +1,5 @@
 {
+  "homepage": "http://ANIRUDH-VADERA.github.io/Entertaintment-Hub",
   "name": "entertaintment-hub",
   "version": "0.1.0",
   "private": true,
@@ -22,6 +23,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -47,6 +50,7 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "gh-pages": "^5.0.0"
   }
 }
